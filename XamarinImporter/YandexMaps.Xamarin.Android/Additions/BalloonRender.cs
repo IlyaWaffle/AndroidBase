@@ -3,7 +3,7 @@ using Android.Runtime;
 
 namespace RU.Yandex.Yandexmapkit.Overlay.Balloon
 {
-    public partial class BalloonRender : Java.Lang.Object, Java.Lang.IComparable
+    /*public partial class BalloonRender : Java.Lang.Object, Java.Lang.IComparable
     {
         int Java.Lang.IComparable.CompareTo(Java.Lang.Object obj)
         {
@@ -14,5 +14,5 @@ namespace RU.Yandex.Yandexmapkit.Overlay.Balloon
         {
             A(p0, (BalloonItem)p1);
         }
-    }
+    }*/
 }

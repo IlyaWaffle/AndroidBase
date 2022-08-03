@@ -2,7 +2,7 @@
 
 namespace RU.Yandex.Yandexmapkit.Overlay
 {
-    public partial class Overlay : Java.Lang.Object, Java.Lang.IComparable
+    /*public partial class Overlay : Java.Lang.Object, Java.Lang.IComparable
     {
         int  Java.Lang.IComparable.CompareTo(Java.Lang.Object obj)
         {
@@ -16,5 +16,5 @@ namespace RU.Yandex.Yandexmapkit.Overlay
         {
             return A((RU.Yandex.Yandexmapkit.Overlay.OverlayItem)obj);
         }
-    }
+    }*/
 }

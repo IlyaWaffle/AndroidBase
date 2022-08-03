@@ -8,21 +8,21 @@ using AndroidX.AppCompat.App;
 using Google.Android.Material.FloatingActionButton;
 using Google.Android.Material.Snackbar;
 
-using RU;
-using RU.Yandex;
-using RU.Yandex.Core;
-using RU.Yandex.Device;
-using RU.Yandex.Yandexmapkit;
+
+
 
 namespace Android_V0
 {
+    
 
     [Activity(Label = "@string/app_name", Theme = "@style/AppTheme.NoActionBar", MainLauncher = true)]
 
     public class MainActivity : AppCompatActivity
     {
+        
         protected override void OnCreate(Bundle savedInstanceState)
         {
+            
             base.OnCreate(savedInstanceState);
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             SetContentView(Resource.Layout.activity_main);
@@ -34,6 +34,9 @@ namespace Android_V0
 
             FloatingActionButton fab = FindViewById<FloatingActionButton>(Resource.Id.fab);
             fab.Click += FabOnClick;
+
+            //MapKitFactory.SetApiKey("e32d0322-1b71-454f-8170-f4615bfb6472");
+            //MapKitFactory.Initialize(this);
 
             
 
