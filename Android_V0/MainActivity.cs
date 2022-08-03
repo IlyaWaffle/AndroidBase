@@ -8,7 +8,11 @@ using AndroidX.AppCompat.App;
 using Google.Android.Material.FloatingActionButton;
 using Google.Android.Material.Snackbar;
 
-
+using RU;
+using RU.Yandex;
+using RU.Yandex.Core;
+using RU.Yandex.Device;
+using RU.Yandex.Yandexmapkit;
 
 namespace Android_V0
 {
@@ -17,7 +21,6 @@ namespace Android_V0
 
     public class MainActivity : AppCompatActivity
     {
-        
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
@@ -31,6 +34,9 @@ namespace Android_V0
 
             FloatingActionButton fab = FindViewById<FloatingActionButton>(Resource.Id.fab);
             fab.Click += FabOnClick;
+
+            
+
         }
 
         public override bool OnCreateOptionsMenu(IMenu menu)
