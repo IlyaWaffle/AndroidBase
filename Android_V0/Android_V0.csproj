@@ -110,9 +110,9 @@
     <PackageReference Include="Xamarin.Essentials" Version="1.6.1" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\YandexMapsImporter\YandexMapsImporter.csproj">
-      <Project>{1e99ce77-f946-4e56-b079-d5b3af96f167}</Project>
-      <Name>YandexMapsImporter</Name>
+    <ProjectReference Include="..\XamarinImporter\YandexMaps.Xamarin.Android\Xamarin.YandexMaps.Android.csproj">
+      <Project>{4b36a4cc-82b1-4a38-b5bf-f866fee18682}</Project>
+      <Name>Xamarin.YandexMaps.Android</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
