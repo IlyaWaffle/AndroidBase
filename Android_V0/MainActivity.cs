@@ -8,8 +8,10 @@ using AndroidX.AppCompat.App;
 using Google.Android.Material.FloatingActionButton;
 using Google.Android.Material.Snackbar;
 
+using Xamarin.Essentials;
 
-
+using Com.Yandex;
+using Com.Yandex.Mapkit;
 
 namespace Android_V0
 {
@@ -35,8 +37,10 @@ namespace Android_V0
             FloatingActionButton fab = FindViewById<FloatingActionButton>(Resource.Id.fab);
             fab.Click += FabOnClick;
 
-            //MapKitFactory.SetApiKey("e32d0322-1b71-454f-8170-f4615bfb6472");
-            //MapKitFactory.Initialize(this);
+            
+
+            MapKitFactory.SetApiKey("e32d0322-1b71-454f-8170-f4615bfb6472");
+            MapKitFactory.Initialize(this);
 
             
 

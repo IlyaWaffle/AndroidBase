@@ -3370,6 +3370,18 @@ namespace Android_V0
 			// aapt resource value: 0x7F07007F
 			public const int tooltip_frame_light = 2131165311;
 			
+			// aapt resource value: 0x7F070080
+			public const int yandex_logo_en = 2131165312;
+			
+			// aapt resource value: 0x7F070081
+			public const int yandex_logo_en_white = 2131165313;
+			
+			// aapt resource value: 0x7F070082
+			public const int yandex_logo_ru = 2131165314;
+			
+			// aapt resource value: 0x7F070083
+			public const int yandex_logo_ru_white = 2131165315;
+			
 			static Drawable()
 			{
 				global::Android.Runtime.ResourceIdManager.UpdateIdValues();
