@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+    <!--
+  <add-node path="/api/package[@name='ru.yandex.yandexmapkit.overlay']/class[@name='Overlay']">
+    <method name="compareTo" return="int" abstract="false" native="false" synchronized="false" static="false" final="false" deprecated="not deprecated" visibility="public">
+      <parameter name="p0" type="java.lang.Object" />
+    </method>
+  </add-node>
+  <add-node path="/api/package[@name='ru.yandex.core']/class[@name='HttpNativeExcange']">
+    <method name="compareTo" return="int" abstract="false" native="false" synchronized="false" static="false" final="false" deprecated="not deprecated" visibility="public">
+      <parameter name="p0" type="java.lang.Object" />
+    </method>
+  </add-node>
+  <add-node path="/api/package[@name='ru.yandex.yandexmapkit.overlay']/class[@name='OverlayItem']">
+    <method name="compareTo" return="int" abstract="false" native="false" synchronized="false" static="false" final="false" deprecated="not deprecated" visibility="public">
+      <parameter name="p0" type="java.lang.Object" />
+    </method>
+  </add-node>  
+  <add-node path="/api/package[@name='ru.yandex.yandexmapkit.overlay.balloon']/class[@name='BalloonRender']">
+    <method name="draw" return="void" abstract="false" native="false" synchronized="false" static="false" final="false" deprecated="not deprecated" visibility="public">
+      <parameter name="p0" type="android.graphics.Canvas" />
+	  <parameter name="p1" type="RU.Yandex.Yandexmapkit.Overlay.OverlayItem" />
+    </method>
+  </add-node> 
+  -->
+</metadata>

@@ -17,6 +17,7 @@ namespace Android_V0
 
     public class MainActivity : AppCompatActivity
     {
+        
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
