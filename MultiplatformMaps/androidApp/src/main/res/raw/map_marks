@@ -1,0 +1,18 @@
+{
+    "marks": [
+        {
+            "id": "mark1",
+            "latitude": 58.5942,
+            "longitude": 49.6839,
+            "name": "Mark1",
+            "description": "Mark1 description"
+        },
+        {
+            "id": "mark2",
+            "latitude": 58.5918,
+            "longitude": 49.6821,
+            "name": "Mark2",
+            "description": "Mark2 description"
+        }
+    ]
+}
