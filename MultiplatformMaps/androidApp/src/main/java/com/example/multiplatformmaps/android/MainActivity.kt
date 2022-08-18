@@ -29,14 +29,11 @@ class MainActivity : AppCompatActivity(), UserLocationObjectListener {
 
     private var mapView: MapView? = null
     private var userLocationLayer: UserLocationLayer? = null
-    private var markPosition: PlacemarkMapObject? = null
-    private var newPoint: Point? = null
-    private var segment: Segment? = null
     private var mapObjects: MapObjectCollection? = null
 
     private var factText: String? =null
     private var factTitle: String? =null
-    var sound: MediaPlayer? = null
+    private var sound: MediaPlayer? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -61,10 +58,6 @@ class MainActivity : AppCompatActivity(), UserLocationObjectListener {
         userLocationLayer!!.setObjectListener(this)
 
         sound = MediaPlayer.create(this, R.raw.music)
-
-        segment = Segment(Point(58.5940, 49.6819),Point(58.5938, 49.6856))
-        newPoint = Geo.closestPoint(Point(58.5941, 49.6826), segment)
-
     }
 
     override fun onStop() {
@@ -89,8 +82,7 @@ class MainActivity : AppCompatActivity(), UserLocationObjectListener {
                 this, R.drawable.user_arrow
             )
         )
-        //var info: InputStream = assets.open("map_mark")
-        //Log.v("Test", info.toString())
+
         val pinIcon = userLocationView.pin.useCompositeIcon()
         pinIcon.setIcon(
             "icon",
