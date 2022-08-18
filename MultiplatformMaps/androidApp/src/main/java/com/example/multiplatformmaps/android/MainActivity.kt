@@ -1,11 +1,14 @@
 package com.example.multiplatformmaps.android
 
+import android.content.DialogInterface
 import android.graphics.Color
 import android.graphics.PointF
+import android.media.MediaPlayer
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.yandex.mapkit.MapKitFactory
 import com.yandex.mapkit.geometry.Geo
@@ -31,6 +34,10 @@ class MainActivity : AppCompatActivity(), UserLocationObjectListener {
     private var segment: Segment? = null
     private var mapObjects: MapObjectCollection? = null
 
+    private var factText: String? =null
+    private var factTitle: String? =null
+    var sound: MediaPlayer? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
 
 
@@ -42,11 +49,6 @@ class MainActivity : AppCompatActivity(), UserLocationObjectListener {
         mapView!!.map.isRotateGesturesEnabled = false
         mapView!!.map.move(CameraPosition(Point(0.0, 0.0), 14F, 0F, 0F))
 
-        //Map mark
-        /*markPosition = mapView!!.map.mapObjects.addPlacemark(
-            Point(58.5942, 49.6839),
-            ImageProvider.fromResource(this, R.drawable.search_result)
-        )*/
         mapObjects = mapView!!.map.mapObjects.addCollection()
         createMarkMapObjects()
 
@@ -57,6 +59,8 @@ class MainActivity : AppCompatActivity(), UserLocationObjectListener {
         userLocationLayer!!.isHeadingEnabled = true
 
         userLocationLayer!!.setObjectListener(this)
+
+        sound = MediaPlayer.create(this, R.raw.music)
 
         segment = Segment(Point(58.5940, 49.6819),Point(58.5938, 49.6856))
         newPoint = Geo.closestPoint(Point(58.5941, 49.6826), segment)
@@ -107,11 +111,11 @@ class MainActivity : AppCompatActivity(), UserLocationObjectListener {
         userLocationView.accuracyCircle.fillColor = Color.BLUE and -0x66000001
     }
 
-    class MarkMapObjectData(markName: String, description: String) {
+    class MarkMapObjectData(markName: String, description: String, factTitle: String, factText: String) {
         var markName: String = markName
         var description: String = description
-
-
+        var factTitle: String = factTitle
+        var factText: String = factText
     }
 
     private fun createMarkMapObjects(){
@@ -130,12 +134,18 @@ class MainActivity : AppCompatActivity(), UserLocationObjectListener {
             val longitude = marks.getJSONObject(i).get("longitude")
             val name = marks.getJSONObject(i).get("name")
             val description = marks.getJSONObject(i).get("description")
+            val factTitle = marks.getJSONObject(i).get("factTitle")
+            val factText = marks.getJSONObject(i).get("factText")
 
             var markObject: PlacemarkMapObject? = mapObjects?.addPlacemark(
                 Point(latitude as Double, longitude as Double),
                 ImageProvider.fromResource(this, R.drawable.search_result))
 
-            markObject?.userData = MarkMapObjectData(name as String,description as String)
+            markObject?.userData = MarkMapObjectData(
+                name as String,
+                description as String,
+                factTitle as String,
+                factText as String)
             markObject?.addTapListener(MarkMapObjectTapListener)
 
         }
@@ -147,7 +157,11 @@ class MainActivity : AppCompatActivity(), UserLocationObjectListener {
                 val markData: Any? = mapObject.userData
                 if (markData is MarkMapObjectData) {
                     val textView = findViewById<TextView>(R.id.markName)
+
                     textView.text = markData.markName
+                    factTitle = markData.factTitle
+                    factText = markData.factText
+
                     val toast = Toast.makeText(
                         applicationContext,
                         "Mark " + markData.markName + " and description "
@@ -163,30 +177,42 @@ class MainActivity : AppCompatActivity(), UserLocationObjectListener {
     }
 
     fun onFactButtonClick(view: View) {
-        val toast = Toast.makeText(
-            applicationContext,
-            "Fact",
-            Toast.LENGTH_SHORT
-        )
-        toast.show()
+        if (factTitle != null && factText != null){
+            var builder = AlertDialog.Builder(this)
+            builder.setTitle(factTitle)
+            builder.setMessage(factText)
+            builder.setPositiveButton("Close",DialogInterface.OnClickListener{ dialog, _ ->
+                dialog.cancel()
+            })
+
+            var alert = builder.create()
+            alert.show()
+        } else {
+            val toast = Toast.makeText(
+                applicationContext,
+                "Select mark first",
+                Toast.LENGTH_SHORT
+            )
+            toast.show()
+        }
     }
 
     fun onMusicButtonClick(view: View){
-        val toast = Toast.makeText(
-            applicationContext,
-            "Music",
-            Toast.LENGTH_SHORT
-        )
-        toast.show()
-    }
-
-    fun onVerseButtonClick(view: View){
-        val toast = Toast.makeText(
-            applicationContext,
-            "Verse",
-            Toast.LENGTH_SHORT
-        )
-        toast.show()
+        if (factTitle != null && factText !== null){
+            if (sound?.isPlaying == true) {
+                sound?.stop()
+            }else{
+                sound = MediaPlayer.create(this, R.raw.music)
+                sound?.start()
+            }
+        } else {
+            val toast = Toast.makeText(
+                applicationContext,
+                "Select mark first",
+                Toast.LENGTH_SHORT
+            )
+            toast.show()
+        }
     }
 
     override fun onObjectRemoved(p0: UserLocationView) {
