@@ -5,6 +5,7 @@ import android.graphics.Color
 import android.graphics.PointF
 import android.media.MediaPlayer
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
@@ -15,6 +16,7 @@ import com.yandex.mapkit.geometry.Geo
 import com.yandex.mapkit.geometry.Point
 import com.yandex.mapkit.geometry.Segment
 import com.yandex.mapkit.layers.ObjectEvent
+import com.yandex.mapkit.location.*
 import com.yandex.mapkit.map.*
 import com.yandex.mapkit.mapview.MapView
 import com.yandex.mapkit.user_location.UserLocationLayer
@@ -30,13 +32,24 @@ class MainActivity : AppCompatActivity(), UserLocationObjectListener {
     private var mapView: MapView? = null
     private var userLocationLayer: UserLocationLayer? = null
     private var mapObjects: MapObjectCollection? = null
+    private var locationManager: LocationManager? = null
+    private var locationListener: LocationListener? = null
+
+    private var mark1: Point = Point(58.5942,49.6839)
+    private var mark2: Point = Point(58.5918, 49.6821)
+    //private var mapObjectsList: List<Point> = listOf(mark1, mark2)
+    private var markPositionData1: MarkPositionData = MarkPositionData(mark1,"music")
+    private var markPositionData2: MarkPositionData = MarkPositionData(mark2,"music")
+    private var mapObjectsList: List<MarkPositionData> = listOf(markPositionData1,markPositionData2)
 
     private var factText: String? =null
     private var factTitle: String? =null
     private var sound: MediaPlayer? = null
+    private var resID: Int? = null
+
+    var userLocationPoint: Point = Point(0.0, 0.0)
 
     override fun onCreate(savedInstanceState: Bundle?) {
-
 
         MapKitFactory.setApiKey("e32d0322-1b71-454f-8170-f4615bfb6472")
         MapKitFactory.initialize(this)
@@ -55,6 +68,9 @@ class MainActivity : AppCompatActivity(), UserLocationObjectListener {
         userLocationLayer!!.isVisible = true
         userLocationLayer!!.isHeadingEnabled = true
 
+        locationManager = MapKitFactory.getInstance().createLocationManager()
+        createLocationLister()
+
         userLocationLayer!!.setObjectListener(this)
 
         sound = MediaPlayer.create(this, R.raw.music)
@@ -70,6 +86,8 @@ class MainActivity : AppCompatActivity(), UserLocationObjectListener {
         super.onStart()
         MapKitFactory.getInstance().onStart()
         mapView!!.onStart()
+
+        subscribeToLocationUpdate()
     }
 
     override fun onObjectAdded(userLocationView: UserLocationView) {
@@ -103,13 +121,6 @@ class MainActivity : AppCompatActivity(), UserLocationObjectListener {
         userLocationView.accuracyCircle.fillColor = Color.BLUE and -0x66000001
     }
 
-    class MarkMapObjectData(markName: String, description: String, factTitle: String, factText: String) {
-        var markName: String = markName
-        var description: String = description
-        var factTitle: String = factTitle
-        var factText: String = factText
-    }
-
     private fun createMarkMapObjects(){
         val jsonData = applicationContext.resources.openRawResource(
             applicationContext.resources.getIdentifier(
@@ -125,7 +136,7 @@ class MainActivity : AppCompatActivity(), UserLocationObjectListener {
             val latitude = marks.getJSONObject(i).get("latitude")
             val longitude = marks.getJSONObject(i).get("longitude")
             val name = marks.getJSONObject(i).get("name")
-            val description = marks.getJSONObject(i).get("description")
+            val musicName = marks.getJSONObject(i).get("musicName")
             val factTitle = marks.getJSONObject(i).get("factTitle")
             val factText = marks.getJSONObject(i).get("factText")
 
@@ -135,11 +146,12 @@ class MainActivity : AppCompatActivity(), UserLocationObjectListener {
 
             markObject?.userData = MarkMapObjectData(
                 name as String,
-                description as String,
+                musicName as String,
                 factTitle as String,
                 factText as String)
             markObject?.addTapListener(MarkMapObjectTapListener)
 
+            mapObjectsList.plus(markObject)
         }
     }
 
@@ -153,19 +165,11 @@ class MainActivity : AppCompatActivity(), UserLocationObjectListener {
                     textView.text = markData.markName
                     factTitle = markData.factTitle
                     factText = markData.factText
-
-                    val toast = Toast.makeText(
-                        applicationContext,
-                        "Mark " + markData.markName + " and description "
-                                + markData.description,
-                        Toast.LENGTH_SHORT
-                    )
-                    toast.show()
+                    resID = resources.getIdentifier(markData.musicName, "raw", packageName)
                 }
             }
             return true
         }
-
     }
 
     fun onFactButtonClick(view: View) {
@@ -194,7 +198,8 @@ class MainActivity : AppCompatActivity(), UserLocationObjectListener {
             if (sound?.isPlaying == true) {
                 sound?.stop()
             }else{
-                sound = MediaPlayer.create(this, R.raw.music)
+
+                sound = MediaPlayer.create(this, resID!!)
                 sound?.start()
             }
         } else {
@@ -205,6 +210,73 @@ class MainActivity : AppCompatActivity(), UserLocationObjectListener {
             )
             toast.show()
         }
+    }
+
+    private fun createLocationLister(){
+        locationListener = object: LocationListener {
+            override fun onLocationStatusUpdated(p0: LocationStatus) {
+                Log.v("Test123", p0?.toString() ?: "No status")
+            }
+
+            override fun onLocationUpdated(location: Location) {
+                userLocationPoint = location.position
+                Log.v(
+                    "Test123",
+                    "lat=${location?.position?.latitude ?: ""} " +
+                            "lon=${location?.position?.longitude ?: ""}"
+                )
+
+                mapObjectsList.forEach {
+                    var distance: Double = Geo.distance(userLocationPoint, it.position)
+                    Log.v("Test123", distance.toString() + "")
+                    if (distance < 50) {
+                        mapObjects?.addPlacemark(
+                            Point(
+                                it.position.latitude as Double,
+                                it.position.longitude + 0.0009 as Double
+                            ),
+                            ImageProvider.fromResource(this@MainActivity, R.drawable.search_result)
+                        )
+                        resID = resources.getIdentifier(it.musicName, "raw", packageName)
+                        if (sound?.isPlaying == true) {
+                            sound?.stop()
+                        }else{
+
+                            sound = MediaPlayer.create(this@MainActivity, resID!!)
+                            sound?.start()
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private fun subscribeToLocationUpdate() {
+        if (locationManager != null && locationListener != null) {
+            locationManager!!.subscribeForLocationUpdates(
+                0.0,
+                0,
+                15.0,
+                false,
+                FilteringMode.OFF,
+                locationListener!!
+            )
+        }
+    }
+
+    class MarkMapObjectData(
+        var markName: String,
+        var musicName: String,
+        var factTitle: String,
+        var factText: String
+    ){
+
+    }
+    class MarkPositionData(
+        var position: Point,
+        var musicName: String
+    ){
+
     }
 
     override fun onObjectRemoved(p0: UserLocationView) {
