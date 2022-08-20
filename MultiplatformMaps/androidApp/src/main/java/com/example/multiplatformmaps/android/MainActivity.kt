@@ -38,8 +38,8 @@ class MainActivity : AppCompatActivity(), UserLocationObjectListener {
     private var mark1: Point = Point(58.5942,49.6839)
     private var mark2: Point = Point(58.5918, 49.6821)
     //private var mapObjectsList: List<Point> = listOf(mark1, mark2)
-    private var markPositionData1: MarkPositionData = MarkPositionData(mark1,"music")
-    private var markPositionData2: MarkPositionData = MarkPositionData(mark2,"music")
+    private var markPositionData1: MarkPositionData = MarkPositionData(mark1,"philarmonykirov")
+    private var markPositionData2: MarkPositionData = MarkPositionData(mark2,"philarmonykirov_zahar")
     private var mapObjectsList: List<MarkPositionData> = listOf(markPositionData1,markPositionData2)
 
     private var factText: String? =null
@@ -218,15 +218,6 @@ class MainActivity : AppCompatActivity(), UserLocationObjectListener {
             override fun onLocationStatusUpdated(p0: LocationStatus) {
                 Log.v("Test123", p0?.toString() ?: "No status")
             }
-
-            val points: MutableList<String> = mutableListOf("First")
-
-            val numbers2: MutableList<Int> = mutableListOf(5, 6, 7)
-
-
-
-
-
             override fun onLocationUpdated(location: Location) {
                 userLocationPoint = location.position
                 Log.v(
@@ -244,6 +235,7 @@ class MainActivity : AppCompatActivity(), UserLocationObjectListener {
                             if (sound?.isPlaying != true) {
                                 sound = MediaPlayer.create(this@MainActivity, resID!!)
                                 sound?.start()
+
                             }
                         }
                     }
