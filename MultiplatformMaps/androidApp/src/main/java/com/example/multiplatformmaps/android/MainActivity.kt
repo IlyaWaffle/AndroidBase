@@ -35,15 +35,15 @@ class MainActivity : AppCompatActivity(), UserLocationObjectListener {
     private var locationManager: LocationManager? = null
     private var locationListener: LocationListener? = null
 
-    private var mark1: Point = Point(58.5942,49.6839)
+    /*private var mark1: Point = Point(58.5942,49.6839)
     private var mark2: Point = Point(58.5918, 49.6821)
-    //private var mapObjectsList: List<Point> = listOf(mark1, mark2)
     private var markPositionData1: MarkPositionData = MarkPositionData(mark1,"music")
     private var markPositionData2: MarkPositionData = MarkPositionData(mark2,"music")
-    private var mapObjectsList: List<MarkPositionData> = listOf(markPositionData1,markPositionData2)
+    private var mapObjectsList: List<MarkPositionData> = listOf(markPositionData1,markPositionData2)*/
+    private var markList = mutableListOf<MarkData>()
 
-    private var factText: String? =null
-    private var factTitle: String? =null
+    private var factText: String? = null
+    private var factTitle: String? = null
     private var sound: MediaPlayer? = null
     private var resID: Int? = null
 
@@ -72,6 +72,9 @@ class MainActivity : AppCompatActivity(), UserLocationObjectListener {
         createLocationLister()
 
         userLocationLayer!!.setObjectListener(this)
+
+        var mutableNumbers = mutableListOf<Int>()
+        mutableNumbers.add(1)
 
         sound = MediaPlayer.create(this, R.raw.music)
     }
@@ -151,7 +154,9 @@ class MainActivity : AppCompatActivity(), UserLocationObjectListener {
                 factText as String)
             markObject?.addTapListener(MarkMapObjectTapListener)
 
-            mapObjectsList.plus(markObject)
+            val point = Point(latitude as Double, longitude as Double)
+            val markData = MarkData(point, musicName)
+            markList.add(markData)
         }
     }
 
@@ -226,17 +231,10 @@ class MainActivity : AppCompatActivity(), UserLocationObjectListener {
                             "lon=${location?.position?.longitude ?: ""}"
                 )
 
-                mapObjectsList.forEach {
+                markList.forEach {
                     var distance: Double = Geo.distance(userLocationPoint, it.position)
                     Log.v("Test123", distance.toString() + "")
                     if (distance < 50) {
-                        mapObjects?.addPlacemark(
-                            Point(
-                                it.position.latitude as Double,
-                                it.position.longitude + 0.0009 as Double
-                            ),
-                            ImageProvider.fromResource(this@MainActivity, R.drawable.search_result)
-                        )
                         resID = resources.getIdentifier(it.musicName, "raw", packageName)
                         if (sound?.isPlaying == true) {
                             sound?.stop()
@@ -272,7 +270,7 @@ class MainActivity : AppCompatActivity(), UserLocationObjectListener {
     ){
 
     }
-    class MarkPositionData(
+    class MarkData(
         var position: Point,
         var musicName: String
     ){

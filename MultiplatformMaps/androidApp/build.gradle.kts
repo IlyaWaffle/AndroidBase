@@ -33,7 +33,7 @@ dependencies {
     implementation("com.google.android.material:material:1.4.0")
     implementation("androidx.appcompat:appcompat:1.3.1")
     implementation("androidx.constraintlayout:constraintlayout:2.1.0")
-    implementation("com.yandex.android:maps.mobile:4.1.0-full")
+    implementation("com.yandex.android:maps.mobile:4.1.0-lite")
 
     val room_version = "2.4.3"
     implementation("androidx.room:room-runtime:$room_version")
