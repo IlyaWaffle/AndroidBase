@@ -125,7 +125,7 @@ class MainActivity : AppCompatActivity(), UserLocationObjectListener {
         )
         pinIcon.setIcon(
             "pin",
-            ImageProvider.fromResource(this, R.drawable.search_result),
+            ImageProvider.fromResource(this, R.drawable.icon),
             IconStyle().setAnchor(PointF(0.5f, 0.5f))
                 .setRotationType(RotationType.ROTATE)
                 .setZIndex(1f)
@@ -165,8 +165,10 @@ class MainActivity : AppCompatActivity(), UserLocationObjectListener {
             markObject?.addTapListener(MarkMapObjectTapListener)
 
             val point = Point(latitude as Double, longitude as Double)
-            val markData = MarkData(point, musicName)
-            markList.add(markData)
+            val markData = markObject?.let { MarkData(point, musicName, it) }
+            if (markData != null) {
+                markList.add(markData)
+            }
         }
     }
 
@@ -277,6 +279,11 @@ class MainActivity : AppCompatActivity(), UserLocationObjectListener {
                     if (sound?.isPlaying != true) {
                         if (distance < 50) {
                             resID = resources.getIdentifier(it.musicName, "raw", packageName)
+                            it.markObject.setIcon(ImageProvider.fromResource(
+                                this@MainActivity,
+                                R.drawable.search_result_gray
+                            ))
+
                             sound = MediaPlayer.create(this@MainActivity, resID!!)
                             sound?.setOnCompletionListener { createCompletionListener() }
                             sound?.start()
@@ -317,7 +324,8 @@ class MainActivity : AppCompatActivity(), UserLocationObjectListener {
     }
     class MarkData(
         var position: Point,
-        var musicName: String
+        var musicName: String,
+        var markObject: PlacemarkMapObject
     ){
 
     }

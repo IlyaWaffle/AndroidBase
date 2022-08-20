@@ -46,7 +46,7 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
-  <component name="KotlinMultiplatform" konanHome="C:\Users\kroto\.konan\kotlin-native-prebuilt-windows-x86_64-1.7.10">
+  <component name="KotlinMultiplatform" konanHome="C:\Users\Vladimir\.konan\kotlin-native-prebuilt-windows-x86_64-1.7.10">
     <allAvailableExecutables>
       <executable target="ios_simulator_arm64" targetName="iosSimulatorArm64" execName="test" projectPrefix=":shared:" isTest="true">
         <variants>
