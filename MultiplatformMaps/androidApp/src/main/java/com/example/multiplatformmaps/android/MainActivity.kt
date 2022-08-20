@@ -101,7 +101,7 @@ class MainActivity : AppCompatActivity(), UserLocationObjectListener {
             )
         )
 
-        val pinIcon = userLocationView.pin.useCompositeIcon()
+        /*val pinIcon = userLocationView.pin.useCompositeIcon()
         pinIcon.setIcon(
             "icon",
             ImageProvider.fromResource(this, R.drawable.icon),
@@ -117,7 +117,8 @@ class MainActivity : AppCompatActivity(), UserLocationObjectListener {
                 .setRotationType(RotationType.ROTATE)
                 .setZIndex(1f)
                 .setScale(0.5f)
-        )
+        )*/
+
         userLocationView.accuracyCircle.fillColor = Color.BLUE and -0x66000001
     }
 
@@ -218,6 +219,14 @@ class MainActivity : AppCompatActivity(), UserLocationObjectListener {
                 Log.v("Test123", p0?.toString() ?: "No status")
             }
 
+            val points: MutableList<String> = mutableListOf("First")
+
+            val numbers2: MutableList<Int> = mutableListOf(5, 6, 7)
+
+
+
+
+
             override fun onLocationUpdated(location: Location) {
                 userLocationPoint = location.position
                 Log.v(
@@ -229,21 +238,13 @@ class MainActivity : AppCompatActivity(), UserLocationObjectListener {
                 mapObjectsList.forEach {
                     var distance: Double = Geo.distance(userLocationPoint, it.position)
                     Log.v("Test123", distance.toString() + "")
-                    if (distance < 50) {
-                        mapObjects?.addPlacemark(
-                            Point(
-                                it.position.latitude as Double,
-                                it.position.longitude + 0.0009 as Double
-                            ),
-                            ImageProvider.fromResource(this@MainActivity, R.drawable.search_result)
-                        )
-                        resID = resources.getIdentifier(it.musicName, "raw", packageName)
-                        if (sound?.isPlaying == true) {
-                            sound?.stop()
-                        }else{
-
-                            sound = MediaPlayer.create(this@MainActivity, resID!!)
-                            sound?.start()
+                    if (sound?.isPlaying() != true) {
+                        if (distance < 50) {
+                            resID = resources.getIdentifier(it.musicName, "raw", packageName)
+                            if (sound?.isPlaying != true) {
+                                sound = MediaPlayer.create(this@MainActivity, resID!!)
+                                sound?.start()
+                            }
                         }
                     }
                 }
