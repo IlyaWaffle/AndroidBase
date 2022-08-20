@@ -38,7 +38,10 @@
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentBottom="true"
                 android:minHeight="30dp"
-                android:textAlignment="center" />
+                android:shadowDx="1"
+                android:shadowDy="1"
+                android:textAlignment="center"
+                android:textAllCaps="false" />
 
             <LinearLayout
                 android:layout_width="match_parent"
