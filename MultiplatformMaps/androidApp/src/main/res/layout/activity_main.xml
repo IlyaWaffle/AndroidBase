@@ -8,8 +8,8 @@
 
     <com.yandex.mapkit.mapview.MapView
         android:id="@+id/mapview"
-        android:layout_width="411dp"
-        android:layout_height="731dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -17,84 +17,40 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0">
 
-
-        <TableLayout
+        <Button
+            android:id="@+id/factButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="false"
-            android:layout_alignParentLeft="false"
-            android:layout_alignParentTop="false"
-            android:layout_alignParentEnd="false"
-            android:layout_alignParentRight="false"
+            android:layout_alignParentStart="true"
             android:layout_alignParentBottom="true"
-            android:layout_centerInParent="false"
-            android:layout_centerVertical="false"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:paddingBottom="10dp">
+            android:layout_marginStart="-1dp"
+            android:layout_marginBottom="44dp"
+            android:onClick="onFactButtonClick"
+            android:text="Fact" />
 
-            <TextView
-                android:id="@+id/markName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="false"
-                android:layout_alignParentLeft="false"
-                android:layout_alignParentTop="false"
-                android:layout_alignParentEnd="false"
-                android:layout_alignParentRight="false"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
-                android:maxHeight="60dp"
-                android:minHeight="30dp"
-                android:textAlignment="center" />
+        <TextView
+            android:id="@+id/markName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="146dp"
+            android:layout_marginEnd="155dp"
+            android:layout_marginBottom="95dp"
+            android:text="MarkName"
+            android:textAlignment="center" />
 
-            <LinearLayout android:layout_height="wrap_content">
-
-                <Button
-                    android:id="@+id/musicButton"
-                    android:layout_width="238dp"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentStart="false"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentTop="false"
-                    android:layout_alignParentEnd="false"
-                    android:layout_alignParentRight="false"
-                    android:layout_alignParentBottom="true"
-                    android:layout_marginRight="10dp"
-                    android:onClick="onMusicButtonClick"
-                    android:text="Play Audio"
-                    android:textAllCaps="false" />
-
-                <Button
-                    android:id="@+id/stopMusic"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentStart="false"
-                    android:layout_alignParentLeft="false"
-                    android:layout_alignParentTop="false"
-                    android:layout_alignParentEnd="false"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentBottom="true"
-                    android:layout_toEndOf="@+id/musicButton"
-                    android:onClick="onStopButtonClick"
-                    android:text="Stop"
-                    android:textAllCaps="false" />
-            </LinearLayout>
-
-            <Button
-                android:id="@+id/factButton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="false"
-                android:layout_alignParentLeft="false"
-                android:layout_alignParentRight="false"
-                android:layout_alignParentBottom="true"
-                android:onClick="onFactButtonClick"
-                android:text="Show text"
-                android:textAllCaps="false" />
-        </TableLayout>
-
-
+        <Button
+            android:id="@+id/musicButton"
+            android:layout_width="412dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="-1dp"
+            android:layout_marginBottom="1dp"
+            android:onClick="onMusicButtonClick"
+            android:text="Music" />
 
     </com.yandex.mapkit.mapview.MapView>
 
