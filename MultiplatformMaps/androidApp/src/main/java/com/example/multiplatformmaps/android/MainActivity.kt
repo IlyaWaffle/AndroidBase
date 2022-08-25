@@ -12,6 +12,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import com.example.multiplatformmaps.Greeting
 import com.yandex.mapkit.MapKitFactory
 import com.yandex.mapkit.geometry.Geo
 import com.yandex.mapkit.geometry.Point
@@ -86,6 +87,8 @@ class MainActivity : AppCompatActivity(), UserLocationObjectListener {
 
         val musicButton = findViewById<Button>(R.id.musicButton)
         tmpLocation = userLocationPoint
+
+        Log.i("Login Activity", "Hello from shared module: " + (Greeting().greeting()))
     }
 
     override fun onStop() {
