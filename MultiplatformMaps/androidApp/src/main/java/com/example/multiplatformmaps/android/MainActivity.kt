@@ -165,7 +165,7 @@ class MainActivity : AppCompatActivity(), UserLocationObjectListener {
             markObject?.addTapListener(MarkMapObjectTapListener)
 
             val point = Point(latitude as Double, longitude as Double)
-            val markData = markObject?.let { MarkData(point, musicName, it) }
+            val markData = markObject?.let { MarkData(point, musicName, it, wasPlayed = false) }
             if (markData != null) {
                 markList.add(markData)
             }
@@ -277,12 +277,13 @@ class MainActivity : AppCompatActivity(), UserLocationObjectListener {
                     var distance: Double = Geo.distance(userLocationPoint, it.position)
                     Log.v("Test123", distance.toString() + "")
                     if (sound?.isPlaying != true) {
-                        if (distance < 50) {
+                        if (distance < 50 && !it.wasPlayed) {
                             resID = resources.getIdentifier(it.musicName, "raw", packageName)
                             it.markObject.setIcon(ImageProvider.fromResource(
                                 this@MainActivity,
                                 R.drawable.search_result_gray
                             ))
+                            it.wasPlayed = true
 
                             sound = MediaPlayer.create(this@MainActivity, resID!!)
                             sound?.setOnCompletionListener { createCompletionListener() }
@@ -325,7 +326,8 @@ class MainActivity : AppCompatActivity(), UserLocationObjectListener {
     class MarkData(
         var position: Point,
         var musicName: String,
-        var markObject: PlacemarkMapObject
+        var markObject: PlacemarkMapObject,
+        var wasPlayed: Boolean
     ){
 
     }

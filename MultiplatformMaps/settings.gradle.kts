@@ -9,3 +9,4 @@ pluginManagement {
 rootProject.name = "MultiplatformMaps"
 include(":androidApp")
 include(":shared")
+include(":sharedRegular")
